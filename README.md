@@ -128,6 +128,23 @@ the `.olean` files of step 1. Some of its numbers:
 The axiom count comes from our own traversal of the compiled environment. It is independent of
 Comparator's check and does not replace it.
 
+The report also draws the structure of the development:
+
+- *Maps of the proof*: the upper layers of the dependency graph below the five theorems, the
+  dominator tree (what the theorems use only through one result: seven results, nested in one
+  chain, each dominate at least 10% of the cone, starting with `allChi` at 95.9%), the cone by
+  distance from the theorems, and a map of the second-level directories.
+- *How the sub-theories are used*: the sources and Mathlib are divided into 581 topics; for each
+  topic the report gives how many of its results are used directly and its reach (the share of
+  the project constants in the cone that depend on it, directly or indirectly), with a closer
+  look at the number-theoretic and arithmetic-geometric topics (for example, 31.6% of the project
+  constants in the cone depend on `Mathlib.NumberTheory.NumberField` and 34.8% on
+  `Mathlib.RingTheory.DedekindDomain`), the most used results of each, and a cluster analysis of
+  the dependency network (Leiden communities, modularity 0.80) compared with the directories.
+
+These pictures describe the formal development as compiled. They are not an outline of the
+mathematical argument and say nothing about its correctness.
+
 ---
 
 # lean-rh-alpoge（日本語）
@@ -251,3 +268,18 @@ Comparator（タグ v4.33.0．Lean 4.33.1 でビルド）には，`Main.lean` �
 
 公理の数は，コンパイル済みの環境をこちらでたどって数えたものです．Comparator の検査とは独立で，その代わりには
 なりません．
+
+レポートには，開発の構造を描いた図も載せています．
+
+- 「証明の可視化」: 5 つの定理の下にある依存グラフの上層，支配木（定理がある 1 つの結果を通してしか使わない部分．
+  コーンの 10% 以上を支配する結果は 7 個で，`allChi`（95.9%）から始まる 1 本の鎖になっています），定理からの距離別の
+  コーン，第 2 階層のディレクトリの地図．
+- 「部分理論の使われ方」: ソースと Mathlib を 581 個のトピックに分け，トピックごとに，直接使われている結果の数と
+  到達率（コーンに含まれるプロジェクトの定数のうち，そのトピックに直接または間接に依存するものの割合）を示します．
+  数論・数論幾何に関するトピックは詳しく扱っています（たとえば，コーンに含まれるプロジェクトの定数の 31.6% が
+  `Mathlib.NumberTheory.NumberField` に，34.8% が `Mathlib.RingTheory.DedekindDomain` に依存しています）．
+  各トピックでよく使われている結果の表と，依存ネットワークのクラスタ分析（Leiden 法のコミュニティ，モジュラリティ 0.80）
+  とディレクトリ構造との比較も載せています．
+
+これらの図は，コンパイルされた形式的な開発を記述するものです．数学的な議論の概略ではなく，その正しさについて
+何かを述べるものでもありません．
