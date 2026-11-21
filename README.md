@@ -100,12 +100,15 @@ theorems of `Main.lean` with `sorry`, the solution module `Main`, and the permit
 `propext`, `Quot.sound`, `Classical.choice`. It rebuilds the project inside a sandbox before it
 exports and checks the proofs.
 
-- The sandboxed rebuild takes more than one batch job. The first job (8 hours) stopped with
-  162,328 of 175,187 modules built; the second job continues from the saved build.
+- The sandboxed rebuild took more than one batch job. The first job (8 hours) stopped with
+  162,328 of 175,187 modules built; the second job continued from the saved build and Lake
+  reported `Build completed successfully (183893 jobs)` at 11:01 on 2026-11-21.
 - After the rebuild, Comparator exports the proofs (61.6 GB of text, measured separately on the
   build of step 1), compares the statements, checks the axioms and replays everything in the Lean
   kernel in a single thread. A sample of 960 modules suggests that the replay takes on the order
   of 15 to 20 hours; this is a rough estimate.
+- Status at 13:35: the export ended at about 12:20, Comparator parsed it (its memory stopped
+  growing at 296 GiB), and one thread has been busy since then.
 - There is no verdict yet. This section and the report will be updated when the run ends.
 
 ### Step 3: HTML report
@@ -244,11 +247,14 @@ Comparator（タグ v4.33.0．Lean 4.33.1 でビルド）には，`Main.lean` �
 解答モジュール `Main`，許可する公理 `propext`・`Quot.sound`・`Classical.choice` を与えています．Comparator は
 サンドボックスの中でプロジェクトをビルドし直してから，証明をエクスポートして検査します．
 
-- サンドボックス内の再ビルドは 1 つのバッチジョブに収まりません．最初のジョブ（8 時間）は 175,187 モジュール中
-  162,328 個をビルドしたところで止まり，2 つ目のジョブが保存したビルドの続きを実行しています．
+- サンドボックス内の再ビルドは 1 つのバッチジョブに収まりませんでした．最初のジョブ（8 時間）は 175,187 モジュール中
+  162,328 個をビルドしたところで止まり，2 つ目のジョブが保存したビルドの続きを実行して，2026-11-21 の 11:01 に Lake が
+  `Build completed successfully (183893 jobs)` と報告しました．
 - 再ビルドの後，Comparator は証明をエクスポートし（テキストで 61.6 GB．ステップ 1 のビルドに対して別途測定），
   主張を比較し，公理を検査し，全体を Lean のカーネルで単一スレッドで再生します．960 モジュールの標本からは，再生に
   15〜20 時間程度かかると見込まれます（粗い見積もりです）．
+- 13:35 時点の状況: エクスポートは 12:20 頃に終わり，Comparator がそれを解析しました（メモリは 296 GiB で増加が止まりました）．
+  その後は 1 スレッドが動き続けています．
 - 判定はまだ出ていません．実行が終わったら，この節とレポートを更新します．
 
 ### ステップ 3: HTML レポート
