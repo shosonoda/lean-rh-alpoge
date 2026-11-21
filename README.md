@@ -63,9 +63,10 @@ Reports are added here as each step finishes:
 1. Build with `lake exe cache get` and `lake build` — **finished, see below**.
 2. Second build under [Comparator](https://github.com/leanprover/comparator), which rebuilds the
    solution in a sandbox, compares the theorem statements with a challenge file, checks the axioms
-   used, and replays the proofs in the Lean kernel — running.
+   used, and replays the proofs in the Lean kernel — **running, no verdict yet** (see below).
 3. HTML report (English / Japanese): summary of the build logs, the file structure of the project,
-   and statistics of the network of proof objects — in preparation.
+   and statistics of the network of proof objects — **[`report/index.html`](report/index.html)**
+   (first edition; it will be updated when step 2 ends).
 
 ### Step 1: `lake exe cache get` and `lake build` (2026-11-21)
 
@@ -91,6 +92,40 @@ them again.
 This step shows that Lean 4.33.1 elaborates every file of the project without an error and
 without a `sorry` warning. It does not by itself check which axioms the five theorems depend on,
 nor that their statements are the intended ones; that is the purpose of step 2.
+
+### Step 2: Comparator (running)
+
+Comparator (tag v4.33.0, built with Lean 4.33.1) is given a challenge file that states the five
+theorems of `Main.lean` with `sorry`, the solution module `Main`, and the permitted axioms
+`propext`, `Quot.sound`, `Classical.choice`. It rebuilds the project inside a sandbox before it
+exports and checks the proofs.
+
+- The sandboxed rebuild takes more than one batch job. The first job (8 hours) stopped with
+  162,328 of 175,187 modules built; the second job continues from the saved build.
+- After the rebuild, Comparator exports the proofs (61.6 GB of text, measured separately on the
+  build of step 1), compares the statements, checks the axioms and replays everything in the Lean
+  kernel in a single thread. A sample of 960 modules suggests that the replay takes on the order
+  of 15 to 20 hours; this is a rough estimate.
+- There is no verdict yet. This section and the report will be updated when the run ends.
+
+### Step 3: HTML report
+
+[`report/index.html`](report/index.html) is one self-contained file with an English / Japanese
+switch; download it and open it in a browser. It contains the summary of the build logs, the file
+structure of the sources, and the statistics of the dependency graph of declarations, read from
+the `.olean` files of step 1. Some of its numbers:
+
+| Item | Value |
+|---|---|
+| Declarations (constants) in the compiled environment | 2,701,132, of which 1,905,921 in the project (1,548,655 theorems, 331,347 definitions) and 795,211 in Lean, Mathlib and the other libraries |
+| Dependency edges | 78,197,009 through types and 92,505,619 through values (proof terms) |
+| Cone of the five theorems (everything they depend on) | 1,478,243 constants: 1,265,279 of the project (66.4% of it) and 212,964 of the libraries |
+| Axioms in that cone | `propext`, `Quot.sound`, `Classical.choice`; no axiom is declared in a project module |
+| Project constants outside the cone | 640,642 (33.6%) |
+| Build time per module | median 6.7 s, 99% at most 33 s, slowest 657 s; 403 hours when summed over all modules |
+
+The axiom count comes from our own traversal of the compiled environment. It is independent of
+Comparator's check and does not replace it.
 
 ---
 
@@ -157,8 +192,9 @@ lake build
 
 1. `lake exe cache get` と `lake build` によるビルド — **完了（下記）**．
 2. [Comparator](https://github.com/leanprover/comparator) を付けた再ビルド．Comparator は解答をサンドボックス内で
-   ビルドし直し，定理の主張を課題ファイルと比較し，使われた公理を検査し，証明を Lean のカーネルで再生します — 実行中．
-3. HTML レポート（英語／日本語）: ビルドログの要約，プロジェクトのファイル構造，証明オブジェクトのネットワークの統計 — 準備中．
+   ビルドし直し，定理の主張を課題ファイルと比較し，使われた公理を検査し，証明を Lean のカーネルで再生します — **実行中．判定はまだ出ていません**（下記）．
+3. HTML レポート（英語／日本語）: ビルドログの要約，プロジェクトのファイル構造，証明オブジェクトのネットワークの統計 —
+   **[`report/index.html`](report/index.html)**（初版．ステップ 2 が終わったら更新します）．
 
 ### ステップ 1: `lake exe cache get` と `lake build`（2026-11-21）
 
@@ -183,3 +219,34 @@ lake build
 このステップで分かるのは，Lean 4.33.1 がプロジェクトの全ファイルをエラーなし・`sorry` の警告なしで処理できる，
 ということです．5 つの定理がどの公理に依存しているか，定理の主張が意図したものかどうかは，これだけでは
 検査されません．それはステップ 2 の目的です．
+
+### ステップ 2: Comparator（実行中）
+
+Comparator（タグ v4.33.0．Lean 4.33.1 でビルド）には，`Main.lean` の 5 つの定理を `sorry` で述べた課題ファイル，
+解答モジュール `Main`，許可する公理 `propext`・`Quot.sound`・`Classical.choice` を与えています．Comparator は
+サンドボックスの中でプロジェクトをビルドし直してから，証明をエクスポートして検査します．
+
+- サンドボックス内の再ビルドは 1 つのバッチジョブに収まりません．最初のジョブ（8 時間）は 175,187 モジュール中
+  162,328 個をビルドしたところで止まり，2 つ目のジョブが保存したビルドの続きを実行しています．
+- 再ビルドの後，Comparator は証明をエクスポートし（テキストで 61.6 GB．ステップ 1 のビルドに対して別途測定），
+  主張を比較し，公理を検査し，全体を Lean のカーネルで単一スレッドで再生します．960 モジュールの標本からは，再生に
+  15〜20 時間程度かかると見込まれます（粗い見積もりです）．
+- 判定はまだ出ていません．実行が終わったら，この節とレポートを更新します．
+
+### ステップ 3: HTML レポート
+
+[`report/index.html`](report/index.html) は英語／日本語を切り替えられる単一のファイルです．ダウンロードして
+ブラウザで開いてください．ビルドログの要約，ソースのファイル構造，宣言の依存グラフの統計（ステップ 1 の `.olean`
+ファイルから読み取ったもの）を載せています．主な数値:
+
+| 項目 | 値 |
+|---|---|
+| コンパイル済み環境の宣言（定数） | 2,701,132 個．うちプロジェクトが 1,905,921 個（定理 1,548,655，定義 331,347），Lean・Mathlib などのライブラリが 795,211 個 |
+| 依存の辺 | 型を通るものが 78,197,009 本，値（証明項）を通るものが 92,505,619 本 |
+| 5 つの定理のコーン（依存先すべて） | 1,478,243 個．プロジェクトの定数が 1,265,279 個（プロジェクトの 66.4%），ライブラリの定数が 212,964 個 |
+| コーンに含まれる公理 | `propext`，`Quot.sound`，`Classical.choice`．プロジェクトのモジュールで宣言された公理はありません |
+| コーンの外にあるプロジェクトの定数 | 640,642 個（33.6%） |
+| モジュールあたりのビルド時間 | 中央値 6.7 秒，99% が 33 秒以下，最長 657 秒．全モジュールの合計は 403 時間 |
+
+公理の数は，コンパイル済みの環境をこちらでたどって数えたものです．Comparator の検査とは独立で，その代わりには
+なりません．
