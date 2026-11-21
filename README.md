@@ -65,7 +65,7 @@ Reports are added here as each step finishes:
    solution in a sandbox, compares the theorem statements with a challenge file, checks the axioms
    used, and replays the proofs in the Lean kernel — **running, no verdict yet** (see below).
 3. HTML report (English / Japanese): summary of the build logs, the file structure of the project,
-   and statistics of the network of proof objects — **[`report/index.html`](report/index.html)**
+   and statistics of the network of proof objects — **<https://shosonoda.github.io/lean-rh-alpoge/>**
    (first edition; it will be updated when step 2 ends).
 
 ### Step 1: `lake exe cache get` and `lake build` (2026-11-21)
@@ -110,8 +110,9 @@ exports and checks the proofs.
 
 ### Step 3: HTML report
 
-[`report/index.html`](report/index.html) is one self-contained file with an English / Japanese
-switch; download it and open it in a browser. It contains the summary of the build logs, the file
+The report is published at **<https://shosonoda.github.io/lean-rh-alpoge/>**. It is one
+self-contained file with an English / Japanese switch; the same file is in this repository as
+[`report/index.html`](report/index.html). It contains the summary of the build logs, the file
 structure of the sources, and the statistics of the dependency graph of declarations, read from
 the `.olean` files of step 1. Some of its numbers:
 
@@ -194,7 +195,7 @@ lake build
 2. [Comparator](https://github.com/leanprover/comparator) を付けた再ビルド．Comparator は解答をサンドボックス内で
    ビルドし直し，定理の主張を課題ファイルと比較し，使われた公理を検査し，証明を Lean のカーネルで再生します — **実行中．判定はまだ出ていません**（下記）．
 3. HTML レポート（英語／日本語）: ビルドログの要約，プロジェクトのファイル構造，証明オブジェクトのネットワークの統計 —
-   **[`report/index.html`](report/index.html)**（初版．ステップ 2 が終わったら更新します）．
+   **<https://shosonoda.github.io/lean-rh-alpoge/>**（初版．ステップ 2 が終わったら更新します）．
 
 ### ステップ 1: `lake exe cache get` と `lake build`（2026-11-21）
 
@@ -235,8 +236,8 @@ Comparator（タグ v4.33.0．Lean 4.33.1 でビルド）には，`Main.lean` �
 
 ### ステップ 3: HTML レポート
 
-[`report/index.html`](report/index.html) は英語／日本語を切り替えられる単一のファイルです．ダウンロードして
-ブラウザで開いてください．ビルドログの要約，ソースのファイル構造，宣言の依存グラフの統計（ステップ 1 の `.olean`
+レポートは **<https://shosonoda.github.io/lean-rh-alpoge/>** で公開しています．英語／日本語を切り替えられる
+単一のファイルで，同じものをこのリポジトリの [`report/index.html`](report/index.html) にも置いています．ビルドログの要約，ソースのファイル構造，宣言の依存グラフの統計（ステップ 1 の `.olean`
 ファイルから読み取ったもの）を載せています．主な数値:
 
 | 項目 | 値 |
