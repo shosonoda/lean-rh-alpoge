@@ -107,8 +107,11 @@ exports and checks the proofs.
   build of step 1), compares the statements, checks the axioms and replays everything in the Lean
   kernel in a single thread. A sample of 960 modules suggests that the replay takes on the order
   of 15 to 20 hours; this is a rough estimate.
-- Status at 13:35: the export ended at about 12:20, Comparator parsed it (its memory stopped
-  growing at 296 GiB), and one thread has been busy since then.
+- The export ended at about 12:20 on 2026-11-21 and Comparator parsed it (its memory stopped
+  growing at 296 GiB). One thread has been busy since then.
+- Status at 06:54 on 2026-11-22: that thread has used 18.5 hours of CPU time and the run has not
+  ended. The time limit of this job ends at 16:30, so a second copy of the run was started on
+  another node with a time limit of 4 days.
 - There is no verdict yet. This section and the report will be updated when the run ends.
 
 ### Step 3: HTML report
@@ -253,8 +256,10 @@ Comparator（タグ v4.33.0．Lean 4.33.1 でビルド）には，`Main.lean` �
 - 再ビルドの後，Comparator は証明をエクスポートし（テキストで 61.6 GB．ステップ 1 のビルドに対して別途測定），
   主張を比較し，公理を検査し，全体を Lean のカーネルで単一スレッドで再生します．960 モジュールの標本からは，再生に
   15〜20 時間程度かかると見込まれます（粗い見積もりです）．
-- 13:35 時点の状況: エクスポートは 12:20 頃に終わり，Comparator がそれを解析しました（メモリは 296 GiB で増加が止まりました）．
+- エクスポートは 2026-11-21 の 12:20 頃に終わり，Comparator がそれを解析しました（メモリは 296 GiB で増加が止まりました）．
   その後は 1 スレッドが動き続けています．
+- 2026-11-22 06:54 時点の状況: そのスレッドの CPU 時間は 18.5 時間に達しましたが，実行はまだ終わっていません．
+  このジョブの制限時間は 16:30 に来るので，制限時間を 4 日にした同じ実行を別のノードでも始めました．
 - 判定はまだ出ていません．実行が終わったら，この節とレポートを更新します．
 
 ### ステップ 3: HTML レポート
