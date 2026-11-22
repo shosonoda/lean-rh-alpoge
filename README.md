@@ -109,9 +109,12 @@ exports and checks the proofs.
   of 15 to 20 hours; this is a rough estimate.
 - The export ended at about 12:20 on 2026-11-21 and Comparator parsed it (its memory stopped
   growing at 296 GiB). One thread has been busy since then.
-- Status at 06:54 on 2026-11-22: that thread has used 18.5 hours of CPU time and the run has not
-  ended. The time limit of this job ends at 16:30, so a second copy of the run was started on
-  another node with a time limit of 4 days.
+- The second job reached its time budget at 16:00 on 2026-11-22 and was stopped without a verdict:
+  that thread had been busy for 27.6 hours. Comparator prints its messages only when it ends, so the
+  log does not show which stage it was in.
+- A third job, the same run with a time limit of 4 days, was started on another node at 06:54 on
+  2026-11-22. It completed the sandboxed rebuild (08:27, again `Build completed successfully
+  (183893 jobs)`) and the export, and has been in the same single-threaded stage since about 09:50.
 - There is no verdict yet. This section and the report will be updated when the run ends.
 
 ### Step 3: HTML report
@@ -258,8 +261,10 @@ Comparator（タグ v4.33.0．Lean 4.33.1 でビルド）には，`Main.lean` �
   15〜20 時間程度かかると見込まれます（粗い見積もりです）．
 - エクスポートは 2026-11-21 の 12:20 頃に終わり，Comparator がそれを解析しました（メモリは 296 GiB で増加が止まりました）．
   その後は 1 スレッドが動き続けています．
-- 2026-11-22 06:54 時点の状況: そのスレッドの CPU 時間は 18.5 時間に達しましたが，実行はまだ終わっていません．
-  このジョブの制限時間は 16:30 に来るので，制限時間を 4 日にした同じ実行を別のノードでも始めました．
+- 2 つ目のジョブは 2026-11-22 の 16:00 に時間の上限に達し，判定が出ないまま止まりました．そのスレッドは 27.6 時間動き続けていました．
+  Comparator は終了時にまとめてメッセージを出力するので，どの段階にいたかはログからは分かりません．
+- 3 つ目のジョブ（同じ実行，制限時間 4 日）を 2026-11-22 の 06:54 に別のノードで始めました．サンドボックス内の再ビルド
+  （08:27．同じく `Build completed successfully (183893 jobs)`）とエクスポートを終え，09:50 頃から同じ単一スレッドの段階にあります．
 - 判定はまだ出ていません．実行が終わったら，この節とレポートを更新します．
 
 ### ステップ 3: HTML レポート
