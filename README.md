@@ -119,9 +119,14 @@ exports and checks the proofs.
 
 ### Step 3: HTML report
 
-The report is published at **<https://shosonoda.github.io/lean-rh-alpoge/>**. It is one
-self-contained file with an English / Japanese switch; the same file is in this repository as
-[`report/index.html`](report/index.html). It contains the summary of the build logs, the file
+The report is published at **<https://shosonoda.github.io/lean-rh-alpoge/>**. It has five pages
+with an English / Japanese switch, reached through the tabs at the top; each page is one
+self-contained file, and the same files are in this repository under [`report/`](report/):
+[overview](report/index.html) (sources, the record of the build, our Comparator runs),
+[official route](report/official.html) (our own run of the checking procedure published in the
+community repository, with its deviations from that procedure and its present state),
+[build analysis](report/build.html), [proof analysis](report/proof.html) and
+[methods](report/methods.html). It contains the summary of the build logs, the file
 structure of the sources, and the statistics of the dependency graph of declarations, read from
 the `.olean` files of step 1. Some of its numbers:
 
@@ -269,8 +274,11 @@ Comparator（タグ v4.33.0．Lean 4.33.1 でビルド）には，`Main.lean` �
 
 ### ステップ 3: HTML レポート
 
-レポートは **<https://shosonoda.github.io/lean-rh-alpoge/>** で公開しています．英語／日本語を切り替えられる
-単一のファイルで，同じものをこのリポジトリの [`report/index.html`](report/index.html) にも置いています．ビルドログの要約，ソースのファイル構造，宣言の依存グラフの統計（ステップ 1 の `.olean`
+レポートは **<https://shosonoda.github.io/lean-rh-alpoge/>** で公開しています．英語／日本語を切り替えられる 5 つのページからなり，
+上部のタブで移動できます．各ページは単一のファイルで，同じものをこのリポジトリの [`report/`](report/) にも置いています:
+[概要](report/index.html)（入手元，ビルドの記録，Comparator の実行），
+[公式手順](report/official.html)（コミュニティのリポジトリが公開している検査手順をこちらで実行した記録．手順との相違点と現在の状態を含みます），
+[ビルドの解析](report/build.html)，[証明の解析](report/proof.html)，[方法](report/methods.html)．ビルドログの要約，ソースのファイル構造，宣言の依存グラフの統計（ステップ 1 の `.olean`
 ファイルから読み取ったもの）を載せています．主な数値:
 
 | 項目 | 値 |
