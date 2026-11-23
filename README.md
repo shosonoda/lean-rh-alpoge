@@ -115,6 +115,14 @@ exports and checks the proofs.
 - A third job, the same run with a time limit of 4 days, was started on another node at 06:54 on
   2026-11-22. It completed the sandboxed rebuild (08:27, again `Build completed successfully
   (183893 jobs)`) and the export, and has been in the same single-threaded stage since about 09:50.
+- Separately, we ran the checking procedure published in the community repository
+  (`lake comparator` of Lean 4.36.0 on the two exports) in one job with a time limit of 24 hours.
+  The export of the solution has the sha256 published by a third party. The judge printed
+  `nanoda kernel accepts the solution` after 1 h 58 min of nanoda; the Lean default kernel then ran
+  for 19 h 42 min and was stopped at the time budget of the job on 2026-11-23 at 20:58, so
+  `lake comparator` gave no verdict. `leanchecker-paranoid` cannot start on these nodes and was
+  left out. This is our own run, with deviations from the procedure; see the
+  [official route](report/official.html) page.
 - There is no verdict yet. This section and the report will be updated when the run ends.
 
 ### Step 3: HTML report
@@ -270,6 +278,12 @@ Comparator（タグ v4.33.0．Lean 4.33.1 でビルド）には，`Main.lean` �
   Comparator は終了時にまとめてメッセージを出力するので，どの段階にいたかはログからは分かりません．
 - 3 つ目のジョブ（同じ実行，制限時間 4 日）を 2026-11-22 の 06:54 に別のノードで始めました．サンドボックス内の再ビルド
   （08:27．同じく `Build completed successfully (183893 jobs)`）とエクスポートを終え，09:50 頃から同じ単一スレッドの段階にあります．
+- これとは別に，コミュニティのリポジトリが公開している検査手順（2 つのエクスポートに対する Lean 4.36.0 の `lake comparator`）を，
+  制限時間 24 時間のジョブ 1 本で実行しました．解答のエクスポートの sha256 は，第三者が公表している値と一致しました．
+  判定は，nanoda が 1 時間 58 分動いたところで `nanoda kernel accepts the solution` と出力しました．続く Lean の既定のカーネルは
+  19 時間 42 分動いたところで，2026-11-23 の 20:58 にジョブの制限時間で停止させたので，`lake comparator` の判定は出ていません．
+  `leanchecker-paranoid` はこのノードでは起動できないので外しています．これはこちらで実行した記録であり，手順との相違点があります．
+  [公式手順](report/official.html) のページを見てください．
 - 判定はまだ出ていません．実行が終わったら，この節とレポートを更新します．
 
 ### ステップ 3: HTML レポート
