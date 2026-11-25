@@ -132,8 +132,17 @@ of the run:
   `lake comparator` gave no verdict. `leanchecker-paranoid` cannot start on these nodes and was
   left out. This is our own run, with deviations from the procedure; see the
   [official route](report/official.html) page.
-- The run that ended with a verdict is the standalone Comparator (third job). Our run of the
-  community procedure has no verdict.
+- To see why the Lean default kernel did not end in that run, we ran the same checker
+  (`leanchecker --from-export` of Lean 4.36.0) alone on the same export under three settings of the
+  memory allocator. This is a diagnosis, not a Comparator run. With the default settings, 66% of
+  the stack samples taken after the first three hours were inside the heap collection of the
+  allocator (mimalloc), and the process was stopped after 20 h 8 min without a result. With
+  `MIMALLOC_GENERIC_COLLECT=1000000` the checker printed `Lean default kernel accepts the solution`
+  after 20 h 7 min, and with `MIMALLOC_ALLOW_THP=0` in addition after 13 h 45 min (exit code 0 in
+  both). Details are on the [official route](report/official.html) page.
+- The run that ended with a verdict is the standalone Comparator (third job). Our first run of the
+  community procedure has no verdict. A second run of it, with the same settings and a time limit
+  of 4 days, was started at 11:22 on 2026-11-25 and is running; its result will be added here.
 
 ### Step 3: HTML report
 
@@ -299,7 +308,14 @@ Comparator（タグ v4.33.0．Lean 4.33.1 でビルド）には，`Main.lean` �
   19 時間 42 分動いたところで，2026-11-23 の 20:58 にジョブの制限時間で停止させたので，`lake comparator` の判定は出ていません．
   `leanchecker-paranoid` はこのノードでは起動できないので外しています．これはこちらで実行した記録であり，手順との相違点があります．
   [公式手順](report/official.html) のページを見てください．
-- 判定まで終わったのは単体の Comparator（3 つ目のジョブ）です．コミュニティの手順をこちらで実行したものには，判定が出ていません．
+- この実行で Lean の既定のカーネルが終わらなかった理由を調べるため，同じ検査器（Lean 4.36.0 の `leanchecker --from-export`）を単独で，
+  同じエクスポートに対して，メモリアロケータの設定を 3 通りに変えて実行しました．これは診断であり，Comparator の実行ではありません．
+  既定の設定では，開始 3 時間以降のスタックの標本の 66% がアロケータ（mimalloc）のヒープ走査の中にあり，20 時間 8 分で結果が出ないまま止めました．
+  `MIMALLOC_GENERIC_COLLECT=1000000` を加えると，検査器は 20 時間 7 分で `Lean default kernel accepts the solution` と出力し，
+  さらに `MIMALLOC_ALLOW_THP=0` を加えると 13 時間 45 分で同じ行を出力しました（どちらも終了コード 0）．詳しくは
+  [公式手順](report/official.html) のページを見てください．
+- 判定まで終わったのは単体の Comparator（3 つ目のジョブ）です．コミュニティの手順をこちらで実行した 1 回目には，判定が出ていません．
+  同じ設定で制限時間を 4 日にした 2 回目を 2026-11-25 の 11:22 に始め，実行中です．結果はここに追記します．
 
 ### ステップ 3: HTML レポート
 
