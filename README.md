@@ -63,10 +63,10 @@ Reports are added here as each step finishes:
 1. Build with `lake exe cache get` and `lake build` — **finished, see below**.
 2. Second build under [Comparator](https://github.com/leanprover/comparator), which rebuilds the
    solution in a sandbox, compares the theorem statements with a challenge file, checks the axioms
-   used, and replays the proofs in the Lean kernel — **running, no verdict yet** (see below).
+   used, and replays the proofs in the Lean kernel — **finished: accepted on 2026-11-25** (see below).
 3. HTML report (English / Japanese): summary of the build logs, the file structure of the project,
    and statistics of the network of proof objects — **<https://shosonoda.github.io/lean-rh-alpoge/>**
-   (first edition; it will be updated when step 2 ends).
+   (updated with the result of step 2).
 
 ### Step 1: `lake exe cache get` and `lake build` (2026-11-21)
 
@@ -93,12 +93,18 @@ This step shows that Lean 4.33.1 elaborates every file of the project without an
 without a `sorry` warning. It does not by itself check which axioms the five theorems depend on,
 nor that their statements are the intended ones; that is the purpose of step 2.
 
-### Step 2: Comparator (running)
+### Step 2: Comparator (accepted, 2026-11-25)
 
 Comparator (tag v4.33.0, built with Lean 4.33.1) is given a challenge file that states the five
 theorems of `Main.lean` with `sorry`, the solution module `Main`, and the permitted axioms
 `propext`, `Quot.sound`, `Classical.choice`. It rebuilds the project inside a sandbox before it
 exports and checks the proofs.
+
+**Result: Comparator accepted the solution.** The third job ended at 09:41 on 2026-11-25 with exit
+code 0; the last lines of its output are `Lean default kernel accepts the solution` and
+`Your solution is okay!`. This is the verdict of the standalone Comparator with our challenge file
+and configuration, for the five theorems and the three permitted axioms listed above. The record
+of the run:
 
 - The sandboxed rebuild took more than one batch job. The first job (8 hours) stopped with
   162,328 of 175,187 modules built; the second job continued from the saved build and Lake
@@ -106,15 +112,18 @@ exports and checks the proofs.
 - After the rebuild, Comparator exports the proofs (61.6 GB of text, measured separately on the
   build of step 1), compares the statements, checks the axioms and replays everything in the Lean
   kernel in a single thread. A sample of 960 modules suggests that the replay takes on the order
-  of 15 to 20 hours; this is a rough estimate.
+  of 15 to 20 hours; this was a rough estimate made before the run ended, and the replay took far
+  longer (below).
 - The export ended at about 12:20 on 2026-11-21 and Comparator parsed it (its memory stopped
-  growing at 296 GiB). One thread has been busy since then.
+  growing at 296 GiB). One thread was busy from then on.
 - The second job reached its time budget at 16:00 on 2026-11-22 and was stopped without a verdict:
   that thread had been busy for 27.6 hours. Comparator prints its messages only when it ends, so the
   log does not show which stage it was in.
 - A third job, the same run with a time limit of 4 days, was started on another node at 06:54 on
-  2026-11-22. It completed the sandboxed rebuild (08:27, again `Build completed successfully
-  (183893 jobs)`) and the export, and has been in the same single-threaded stage since about 09:50.
+  2026-11-22. It continued from the build saved by the first job, completed the sandboxed rebuild
+  (08:27, again `Build completed successfully (183893 jobs)`) and the export, and its memory stopped
+  growing at about 10:15. It ended with the verdict above at 09:41 on 2026-11-25: 73 h 14 min after
+  the end of the rebuild, and 74 h 47 min after the start of the job.
 - Separately, we ran the checking procedure published in the community repository
   (`lake comparator` of Lean 4.36.0 on the two exports) in one job with a time limit of 24 hours.
   The export of the solution has the sha256 published by a third party. The judge printed
@@ -123,7 +132,8 @@ exports and checks the proofs.
   `lake comparator` gave no verdict. `leanchecker-paranoid` cannot start on these nodes and was
   left out. This is our own run, with deviations from the procedure; see the
   [official route](report/official.html) page.
-- There is no verdict yet. This section and the report will be updated when the run ends.
+- The run that ended with a verdict is the standalone Comparator (third job). Our run of the
+  community procedure has no verdict.
 
 ### Step 3: HTML report
 
@@ -232,9 +242,9 @@ lake build
 
 1. `lake exe cache get` と `lake build` によるビルド — **完了（下記）**．
 2. [Comparator](https://github.com/leanprover/comparator) を付けた再ビルド．Comparator は解答をサンドボックス内で
-   ビルドし直し，定理の主張を課題ファイルと比較し，使われた公理を検査し，証明を Lean のカーネルで再生します — **実行中．判定はまだ出ていません**（下記）．
+   ビルドし直し，定理の主張を課題ファイルと比較し，使われた公理を検査し，証明を Lean のカーネルで再生します — **完了．2026-11-25 に受理**（下記）．
 3. HTML レポート（英語／日本語）: ビルドログの要約，プロジェクトのファイル構造，証明オブジェクトのネットワークの統計 —
-   **<https://shosonoda.github.io/lean-rh-alpoge/>**（初版．ステップ 2 が終わったら更新します）．
+   **<https://shosonoda.github.io/lean-rh-alpoge/>**（ステップ 2 の結果を反映済み）．
 
 ### ステップ 1: `lake exe cache get` と `lake build`（2026-11-21）
 
@@ -260,31 +270,36 @@ lake build
 ということです．5 つの定理がどの公理に依存しているか，定理の主張が意図したものかどうかは，これだけでは
 検査されません．それはステップ 2 の目的です．
 
-### ステップ 2: Comparator（実行中）
+### ステップ 2: Comparator（受理，2026-11-25）
 
 Comparator（タグ v4.33.0．Lean 4.33.1 でビルド）には，`Main.lean` の 5 つの定理を `sorry` で述べた課題ファイル，
 解答モジュール `Main`，許可する公理 `propext`・`Quot.sound`・`Classical.choice` を与えています．Comparator は
 サンドボックスの中でプロジェクトをビルドし直してから，証明をエクスポートして検査します．
+
+**結果: Comparator は解答を受理しました．** 3 つ目のジョブは 2026-11-25 の 09:41 に終了コード 0 で終わり，出力の最後は
+`Lean default kernel accepts the solution` と `Your solution is okay!` でした．これは，上に挙げた 5 つの定理と 3 つの公理について，
+こちらの課題ファイルと設定で単体の Comparator が出した判定です．実行の記録は次のとおりです．
 
 - サンドボックス内の再ビルドは 1 つのバッチジョブに収まりませんでした．最初のジョブ（8 時間）は 175,187 モジュール中
   162,328 個をビルドしたところで止まり，2 つ目のジョブが保存したビルドの続きを実行して，2026-11-21 の 11:01 に Lake が
   `Build completed successfully (183893 jobs)` と報告しました．
 - 再ビルドの後，Comparator は証明をエクスポートし（テキストで 61.6 GB．ステップ 1 のビルドに対して別途測定），
   主張を比較し，公理を検査し，全体を Lean のカーネルで単一スレッドで再生します．960 モジュールの標本からは，再生に
-  15〜20 時間程度かかると見込まれます（粗い見積もりです）．
+  15〜20 時間程度と見込んでいました（実行が終わる前の粗い見積もりで，実際の再生ははるかに長くかかりました．下記）．
 - エクスポートは 2026-11-21 の 12:20 頃に終わり，Comparator がそれを解析しました（メモリは 296 GiB で増加が止まりました）．
-  その後は 1 スレッドが動き続けています．
+  その後は 1 スレッドが動き続けました．
 - 2 つ目のジョブは 2026-11-22 の 16:00 に時間の上限に達し，判定が出ないまま止まりました．そのスレッドは 27.6 時間動き続けていました．
   Comparator は終了時にまとめてメッセージを出力するので，どの段階にいたかはログからは分かりません．
-- 3 つ目のジョブ（同じ実行，制限時間 4 日）を 2026-11-22 の 06:54 に別のノードで始めました．サンドボックス内の再ビルド
-  （08:27．同じく `Build completed successfully (183893 jobs)`）とエクスポートを終え，09:50 頃から同じ単一スレッドの段階にあります．
+- 3 つ目のジョブ（同じ実行，制限時間 4 日）を 2026-11-22 の 06:54 に別のノードで始めました．最初のジョブが保存したビルドから続けて，
+  サンドボックス内の再ビルド（08:27．同じく `Build completed successfully (183893 jobs)`）とエクスポートを終え，メモリの増加は
+  10:15 頃に止まりました．2026-11-25 の 09:41 に上の判定で終わりました．再ビルドの終了から 73 時間 14 分，ジョブの開始から 74 時間 47 分です．
 - これとは別に，コミュニティのリポジトリが公開している検査手順（2 つのエクスポートに対する Lean 4.36.0 の `lake comparator`）を，
   制限時間 24 時間のジョブ 1 本で実行しました．解答のエクスポートの sha256 は，第三者が公表している値と一致しました．
   判定は，nanoda が 1 時間 58 分動いたところで `nanoda kernel accepts the solution` と出力しました．続く Lean の既定のカーネルは
   19 時間 42 分動いたところで，2026-11-23 の 20:58 にジョブの制限時間で停止させたので，`lake comparator` の判定は出ていません．
   `leanchecker-paranoid` はこのノードでは起動できないので外しています．これはこちらで実行した記録であり，手順との相違点があります．
   [公式手順](report/official.html) のページを見てください．
-- 判定はまだ出ていません．実行が終わったら，この節とレポートを更新します．
+- 判定まで終わったのは単体の Comparator（3 つ目のジョブ）です．コミュニティの手順をこちらで実行したものには，判定が出ていません．
 
 ### ステップ 3: HTML レポート
 
