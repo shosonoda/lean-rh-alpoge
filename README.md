@@ -146,7 +146,7 @@ of the run:
 
 ### Step 3: HTML report
 
-The report is published at **<https://shosonoda.github.io/lean-rh-alpoge/>**. It has eight pages
+The report is published at **<https://shosonoda.github.io/lean-rh-alpoge/>**. It has nine pages
 with an English / Japanese switch, reached through the tabs at the top; each page is one
 self-contained file, and the same files are in this repository under [`report/`](report/):
 [overview](report/index.html) (sources, the record of the build, our Comparator runs),
@@ -164,6 +164,8 @@ and no `sorry` warning, the compact edition (794 files, about 113,600 lines with
 readable edition (803 files, about 477,900 lines) in 12 min 42 s at 64 threads; Comparator v4.35.0, with the
 challenge file and the configuration of the repository unchanged and with nanoda, accepted both editions with exit
 code 0, after 1 h 16 min and 1 h 06 min; the deviations of our runs are on the page),
+[Sernau: proof](report/grh-proof.html) (the same statistics, maps and indicators of the proof network as on the proof
+analysis page, for the compact edition of the shorter proof),
 [Alpöge vs Sernau](report/compare.html) (the distributed proof and the shorter proof side by side, by the same analysis
 of the proof network: the five theorems depend on 1,265,279 constants of the project in the distributed tree and on
 37,569 in the compact edition; 95% of the library declarations the shorter proof depends on are also among those of
@@ -335,7 +337,7 @@ Comparator（タグ v4.33.0．Lean 4.33.1 でビルド）には，`Main.lean` �
 
 ### ステップ 3: HTML レポート
 
-レポートは **<https://shosonoda.github.io/lean-rh-alpoge/>** で公開しています．英語／日本語を切り替えられる 8 つのページからなり，
+レポートは **<https://shosonoda.github.io/lean-rh-alpoge/>** で公開しています．英語／日本語を切り替えられる 9 つのページからなり，
 上部のタブで移動できます．各ページは単一のファイルで，同じものをこのリポジトリの [`report/`](report/) にも置いています:
 [概要](report/index.html)（入手元，ビルドの記録，Comparator の実行），
 [公式手順](report/official.html)（コミュニティのリポジトリが公開している検査手順をこちらで実行した記録．手順との相違点と現在の状態を含みます），
@@ -346,6 +348,7 @@ Comparator（タグ v4.33.0．Lean 4.33.1 でビルド）には，`Main.lean` �
 リポジトリに含まれる Comparator の設定を実行した記録です．どちらの版も終了コード 0，エラー行 0，`sorry` の警告 0 でビルドでき，64 スレッドでの `lake build` は，
 圧縮版（794 ファイル，コメント込みで約 11.4 万行）が 15 分 35 秒，可読版（803 ファイル，約 47.8 万行）が 12 分 42 秒でした．リポジトリの課題ファイルと設定をそのまま用いた Comparator v4.35.0（nanoda あり）は，どちらの版も終了コード 0 で受理しました
 （1 時間 16 分と 1 時間 06 分）．手順との相違点はページに書いています），
+[Sernau 版の解析](report/grh-proof.html)（証明の解析のページと同じ証明ネットワークの統計，可視化，指標を，短縮版（圧縮版）について示したものです），
 [Alpöge 版と Sernau 版](report/compare.html)（配布された証明と短縮版の証明を，同じ証明ネットワークの解析で並べて比べたものです．5 つの定理が依存するプロジェクトの定数は，配布時のツリーで 1,265,279 個，
 圧縮版で 37,569 個です．短縮版が依存するライブラリの宣言の 95% は，配布された証明も依存しています．短縮版の 8,802 個の異なる補題の言明のうち，配布された証明にも現れるのは 58 個です．
 どちらのテキストが優れているかは述べず，数学的内容の評価もしていません），
