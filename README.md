@@ -161,8 +161,9 @@ no `sorry` warning; Comparator was not run on that tree),
 [lsernau/grh-lean](https://github.com/lsernau/grh-lean), a shorter Lean proof of the same five theorems by other
 authors, and our run of the Comparator set-up that it ships; both editions built with exit code 0, no error line
 and no `sorry` warning, the compact edition (794 files, about 113,600 lines with comments) in 15 min 35 s and the
-readable edition (803 files, about 477,900 lines) in 12 min 42 s at 64 threads; the state of the Comparator run
-is on the page) and
+readable edition (803 files, about 477,900 lines) in 12 min 42 s at 64 threads; Comparator v4.35.0, with the
+challenge file and the configuration of the repository unchanged and with nanoda, accepted both editions with exit
+code 0, after 1 h 16 min and 1 h 06 min; the deviations of our runs are on the page) and
 [methods](report/methods.html). It contains the summary of the build logs, the file
 structure of the sources, and the statistics of the dependency graph of declarations, read from
 the `.olean` files of step 1. Some of its numbers:
@@ -338,7 +339,8 @@ Comparator（タグ v4.33.0．Lean 4.33.1 でビルド）には，`Main.lean` �
 `lake build` は 57 分 49 秒，1 時間 40 分，2 時間 29 分でした．いずれも終了コード 0，失敗したジョブ 0，エラー行 0，`sorry` の警告 0 です．このツリーに対して Comparator は実行していません），
 [短縮版](report/grh.html)（別のプロジェクト．別の作者による，同じ 5 つの定理のより短い Lean の証明のリポジトリ [lsernau/grh-lean](https://github.com/lsernau/grh-lean) の 2 つの版をビルドし，
 リポジトリに含まれる Comparator の設定を実行した記録です．どちらの版も終了コード 0，エラー行 0，`sorry` の警告 0 でビルドでき，64 スレッドでの `lake build` は，
-圧縮版（794 ファイル，コメント込みで約 11.4 万行）が 15 分 35 秒，可読版（803 ファイル，約 47.8 万行）が 12 分 42 秒でした．Comparator の状態はページに示しています），
+圧縮版（794 ファイル，コメント込みで約 11.4 万行）が 15 分 35 秒，可読版（803 ファイル，約 47.8 万行）が 12 分 42 秒でした．リポジトリの課題ファイルと設定をそのまま用いた Comparator v4.35.0（nanoda あり）は，どちらの版も終了コード 0 で受理しました
+（1 時間 16 分と 1 時間 06 分）．手順との相違点はページに書いています），
 [方法](report/methods.html)．ビルドログの要約，ソースのファイル構造，宣言の依存グラフの統計（ステップ 1 の `.olean`
 ファイルから読み取ったもの）を載せています．主な数値:
 
