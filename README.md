@@ -146,7 +146,7 @@ of the run:
 
 ### Step 3: HTML report
 
-The report is published at **<https://shosonoda.github.io/lean-rh-alpoge/>**. It has six pages
+The report is published at **<https://shosonoda.github.io/lean-rh-alpoge/>**. It has seven pages
 with an English / Japanese switch, reached through the tabs at the top; each page is one
 self-contained file, and the same files are in this repository under [`report/`](report/):
 [overview](report/index.html) (sources, the record of the build, our Comparator runs),
@@ -156,7 +156,13 @@ community repository, with its deviations from that procedure and its present st
 [parallel build](report/parallel.html) (a later build of another tree: the cleaned-up tree of the
 community repository, commit `9282d3a1`, built from scratch at 144, 64 and 32 threads; `lake build`
 took 57 min 49 s, 1 h 40 min and 2 h 29 min, each with exit code 0, no failed job, no error line and
-no `sorry` warning; Comparator was not run on that tree) and
+no `sorry` warning; Comparator was not run on that tree),
+[shorter proof](report/grh.html) (another project: our build of the two editions of the repository
+[lsernau/grh-lean](https://github.com/lsernau/grh-lean), a shorter Lean proof of the same five theorems by other
+authors, and our run of the Comparator set-up that it ships; both editions built with exit code 0, no error line
+and no `sorry` warning, the compact edition (794 files, about 113,600 lines with comments) in 15 min 35 s and the
+readable edition (803 files, about 477,900 lines) in 12 min 42 s at 64 threads; the state of the Comparator run
+is on the page) and
 [methods](report/methods.html). It contains the summary of the build logs, the file
 structure of the sources, and the statistics of the dependency graph of declarations, read from
 the `.olean` files of step 1. Some of its numbers:
@@ -323,13 +329,16 @@ Comparator（タグ v4.33.0．Lean 4.33.1 でビルド）には，`Main.lean` �
 
 ### ステップ 3: HTML レポート
 
-レポートは **<https://shosonoda.github.io/lean-rh-alpoge/>** で公開しています．英語／日本語を切り替えられる 6 つのページからなり，
+レポートは **<https://shosonoda.github.io/lean-rh-alpoge/>** で公開しています．英語／日本語を切り替えられる 7 つのページからなり，
 上部のタブで移動できます．各ページは単一のファイルで，同じものをこのリポジトリの [`report/`](report/) にも置いています:
 [概要](report/index.html)（入手元，ビルドの記録，Comparator の実行），
 [公式手順](report/official.html)（コミュニティのリポジトリが公開している検査手順をこちらで実行した記録．手順との相違点と現在の状態を含みます），
 [ビルドの解析](report/build.html)，[証明の解析](report/proof.html)，
 [並列ビルド](report/parallel.html)（別のツリーの，後から行ったビルド．コミュニティのリポジトリの整理後のツリー（コミット `9282d3a1`）を 144・64・32 スレッドで最初からビルドし，
 `lake build` は 57 分 49 秒，1 時間 40 分，2 時間 29 分でした．いずれも終了コード 0，失敗したジョブ 0，エラー行 0，`sorry` の警告 0 です．このツリーに対して Comparator は実行していません），
+[短縮版](report/grh.html)（別のプロジェクト．別の作者による，同じ 5 つの定理のより短い Lean の証明のリポジトリ [lsernau/grh-lean](https://github.com/lsernau/grh-lean) の 2 つの版をビルドし，
+リポジトリに含まれる Comparator の設定を実行した記録です．どちらの版も終了コード 0，エラー行 0，`sorry` の警告 0 でビルドでき，64 スレッドでの `lake build` は，
+圧縮版（794 ファイル，コメント込みで約 11.4 万行）が 15 分 35 秒，可読版（803 ファイル，約 47.8 万行）が 12 分 42 秒でした．Comparator の状態はページに示しています），
 [方法](report/methods.html)．ビルドログの要約，ソースのファイル構造，宣言の依存グラフの統計（ステップ 1 の `.olean`
 ファイルから読み取ったもの）を載せています．主な数値:
 
